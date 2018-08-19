@@ -53,14 +53,16 @@ filterNameInput.addEventListener('keyup', function() {
     listTable.innerHTML = '';
 
     for (let key in cookieObj) {
-        if (!(isMatching(key, filterNameInput.value) || isMatching(cookieObj[key], filterNameInput.value))) {
-            listTable.innerHTML = `<tr> 
+        if (isMatching(key, filterNameInput.value) || isMatching(cookieObj[key], filterNameInput.value)) {
+            listTable.innerHTML += `<tr> 
                 <td>${key}</td> 
                 <td>${cookieObj[key]}</td> 
                 <td><a href="" data-key="${key}">Удалить</a></td>
                 </tr>`;
 
-        }
+        } else if (filterNameInput.value == '') {
+            return false;
+        } 
     }
 
 });
@@ -77,7 +79,6 @@ function isMatching (full, chunk) {
 // удаление куки
 listTable.addEventListener('click', (e) => {
     e.preventDefault();
-    console.log(e.target.dataset.key);
     if (e.target.dataset.key) {
         document.cookie = e.target.dataset.key + '=;expires=Thu, 01 Jan 1970 00:00:01 GMT;';
     }
@@ -85,8 +86,7 @@ listTable.addEventListener('click', (e) => {
 });
 
 // здесь можно обработать нажатие на кнопку "добавить cookie"
-addButton.addEventListener('click', () => {
-    
+addButton.addEventListener('click', () => {  
     document.cookie = `${addNameInput.value}=${addValueInput.value}`;
     addCookieTable();
     addNameInput.value = '';
@@ -101,10 +101,10 @@ function addCookieTable () {
 
     for (let key in cookieObj) {
         if (cookieObj) {
-            listTable.innerHTML = `<tr> 
+            listTable.innerHTML += `<tr> 
             <td>${key}</td> 
             <td>${cookieObj[key]}</td> 
-            <td><a href="" data-key="${key}">Удалить</a></td>
+            <td><a href="#" data-key="${key}">Удалить</a></td>
             </tr>`;
 
         }
