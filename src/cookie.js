@@ -47,24 +47,8 @@ const listTable = homeworkContainer.querySelector('#list-table tbody');
 addCookieTable();
 
 // здесь можно обработать нажатия на клавиши внутри текстового поля для фильтрации cookie
-filterNameInput.addEventListener('keyup', function() {
-    const cookieObj = parsInt();
-
-    listTable.innerHTML = '';
-
-    for (let key in cookieObj) {
-        if (isMatching(key, filterNameInput.value) || isMatching(cookieObj[key], filterNameInput.value)) {
-            listTable.innerHTML += `<tr> 
-                <td>${key}</td> 
-                <td>${cookieObj[key]}</td> 
-                <td><a href="" data-key="${key}">Удалить</a></td>
-                </tr>`;
-
-        } else if (filterNameInput.value == '') {
-            return false;
-        } 
-    }
-
+filterNameInput.addEventListener('keyup', function() {  
+    addCookieTable();
 });
 // сортировка куки
 function isMatching (full, chunk) {
@@ -97,22 +81,13 @@ function addCookieTable () {
     const cookieObj = parsInt();
 
     listTable.innerHTML = '';
-
     for (let key in cookieObj) {
-        if (!(filterNameInput.value)) {
-            listTable.innerHTML += `<tr> 
-            <td>${key}</td> 
-            <td>${cookieObj[key]}</td> 
-            <td><a href="#" data-key="${key}">Удалить</a></td>
-            </tr>`;
-
-        } else if (isMatching(key, filterNameInput.value) || isMatching(cookieObj[key], filterNameInput.value)) {
-            listTable.innerHTML += `<tr> 
-            <td>${key}</td> 
-            <td>${cookieObj[key]}</td> 
-            <td><a href="#" data-key="${key}">Удалить</a></td>
-            </tr>`;
-        }
+        if (!(isMatching(key, filterNameInput.value) || isMatching(cookieObj[key], filterNameInput.value))) continue;
+        listTable.innerHTML += `<tr> 
+        <td>${key}</td> 
+        <td>${cookieObj[key]}</td> 
+        <td><a href="#" data-key="${key}">Удалить</a></td>
+        </tr>`;
     }
 }
 
