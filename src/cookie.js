@@ -66,7 +66,6 @@ filterNameInput.addEventListener('keyup', function() {
     }
 
 });
-
 // сортировка куки
 function isMatching (full, chunk) {
     if (full.toLowerCase().indexOf(chunk.toLowerCase()) !== -1) {
@@ -100,13 +99,19 @@ function addCookieTable () {
     listTable.innerHTML = '';
 
     for (let key in cookieObj) {
-        if (cookieObj) {
+        if (!(filterNameInput.value)) {
             listTable.innerHTML += `<tr> 
             <td>${key}</td> 
             <td>${cookieObj[key]}</td> 
             <td><a href="#" data-key="${key}">Удалить</a></td>
             </tr>`;
 
+        } else if (isMatching(key, filterNameInput.value) || isMatching(cookieObj[key], filterNameInput.value)) {
+            listTable.innerHTML += `<tr> 
+            <td>${key}</td> 
+            <td>${cookieObj[key]}</td> 
+            <td><a href="#" data-key="${key}">Удалить</a></td>
+            </tr>`;
         }
     }
 }
